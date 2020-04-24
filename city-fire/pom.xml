@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.hq</groupId>
@@ -42,7 +43,7 @@
 		<hutool.version>4.1.1</hutool.version>
 		<poi.version>3.9</poi.version>
 
-		<!--wagon plugin 配置-->
+		<!--wagon plugin 配置 -->
 		<service-path>/work/cityfire</service-path>
 		<pack-name>${project.artifactId}-${project.version}.jar</pack-name>
 		<remote-addr>192.168.1.10:22</remote-addr>
@@ -59,13 +60,9 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<!--打war包时需要-->
-			<!--<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>-->
+			<!--打war包时需要 -->
+			<!--<exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
+				<artifactId>spring-boot-starter-tomcat</artifactId> </exclusion> </exclusions> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -99,11 +96,11 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>${poi.version}</version>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-devtools</artifactId>-->
-			<!--<optional>true</optional>-->
-		<!--</dependency>-->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>false</optional>
+		</dependency> -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -125,23 +122,23 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
 		</dependency>
-		 <!--oracle驱动-->
-		<!--<dependency>-->
-			<!--<groupId>com.oracle</groupId>-->
-			<!--<artifactId>ojdbc6</artifactId>-->
-			<!--<version>${oracle.version}</version>-->
-		<!--</dependency>-->
-		 <!--mssql驱动-->
-		<!--<dependency>-->
-			<!--<groupId>com.microsoft.sqlserver</groupId>-->
-			<!--<artifactId>sqljdbc4</artifactId>-->
-			<!--<version>${mssql.version}</version>-->
-		<!--</dependency>-->
-		 <!--postgresql驱动-->
-		<!--<dependency>-->
-			<!--<groupId>org.postgresql</groupId>-->
-			<!--<artifactId>postgresql</artifactId>-->
-		<!--</dependency>-->
+		<!--oracle驱动 -->
+		<!--<dependency> -->
+		<!--<groupId>com.oracle</groupId> -->
+		<!--<artifactId>ojdbc6</artifactId> -->
+		<!--<version>${oracle.version}</version> -->
+		<!--</dependency> -->
+		<!--mssql驱动 -->
+		<!--<dependency> -->
+		<!--<groupId>com.microsoft.sqlserver</groupId> -->
+		<!--<artifactId>sqljdbc4</artifactId> -->
+		<!--<version>${mssql.version}</version> -->
+		<!--</dependency> -->
+		<!--postgresql驱动 -->
+		<!--<dependency> -->
+		<!--<groupId>org.postgresql</groupId> -->
+		<!--<artifactId>postgresql</artifactId> -->
+		<!--</dependency> -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
@@ -249,6 +246,11 @@
 			<artifactId>hutool-all</artifactId>
 			<version>${hutool.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -285,13 +287,14 @@
 					<url><![CDATA[scp://${remote-username}:${remote-passwd}@${remote-addr}${service-path}]]></url>
 					<commands>
 						<!-- Kill Old Process -->
-						<command>kill -9 `ps -ef |grep ${project.artifactId}.jar|grep -v "grep" |awk '{print $2}'`</command>
+						<command>kill -9 `ps -ef |grep ${project.artifactId}.jar|grep -v
+							"grep" |awk '{print $2}'`</command>
 						<!-- Restart jar package，write result into cityfire.log -->
 						<command><![CDATA[nohup java -jar ${service-path}/${pack-name} --spring.profiles.active=test > ${service-path}/cityfire.log 2>&1 & ]]></command>
 						<command><![CDATA[netstat -nptl]]></command>
 						<command><![CDATA[ps -ef | grep java | grep -v grep]]></command>
 					</commands>
-					<!-- 运行命令 mvn clean package wagon:upload-single wagon:sshexec-->
+					<!-- 运行命令 mvn clean package wagon:upload-single wagon:sshexec -->
 					<displayCommandOutputs>true</displayCommandOutputs>
 				</configuration>
 			</plugin>
@@ -300,14 +303,14 @@
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.14</version>
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<phase>package</phase>-->
-						<!--<goals>-->
-							<!--<goal>build</goal>-->
-						<!--</goals>-->
-					<!--</execution>-->
-				<!--</executions>-->
+				<!--<executions> -->
+				<!--<execution> -->
+				<!--<phase>package</phase> -->
+				<!--<goals> -->
+				<!--<goal>build</goal> -->
+				<!--</goals> -->
+				<!--</execution> -->
+				<!--</executions> -->
 				<configuration>
 					<imageName>city/fire</imageName>
 					<dockerDirectory>${project.basedir}</dockerDirectory>
